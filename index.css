@@ -1,0 +1,330 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f5f9;
+}
+
+.container {
+    width: 900px;
+    background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    padding: 32px;
+    margin: 40px auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.group {
+    position: relative;
+}
+
+.icon-button {
+    padding: 8px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.icon-button:hover {
+    transform: scale(1.2);
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+}
+
+.tooltip {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    width: 256px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.group:hover .tooltip {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.tooltip-text {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.form-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: all 0.3s;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.input,
+.select {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    outline: none;
+    transition: all 0.3s;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 12px) center;
+}
+
+.button-container {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.generate-button {
+    padding: 12px 32px;
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    color: white;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.8;
+}
+
+.generate-button:hover {
+    opacity: 1 !important;
+}
+
+.news-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.news-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.news-preview {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    padding: 24px;
+    border-radius: 8px;
+}
+
+.preview-text {
+    text-align: center;
+}
+
+.preview-icon {
+    height: 64px;
+    width: 64px;
+    margin: 0 auto 16px;
+    color: #cbd5e1;
+}
+
+.text-muted {
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.text-small {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.footer {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.footer-links a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    --r1: 154%;
+    --r2: 68.5%;
+    width: 60px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+        radial-gradient(var(--r1) var(--r2) at top, #0000 79.5%, #269af2 80%),
+        radial-gradient(var(--r1) var(--r2) at bottom, #269af2 79.5%, #0000 80%),
+        radial-gradient(var(--r1) var(--r2) at top, #0000 79.5%, #269af2 80%),
+        #ccc;
+    background-size: 50.5% 220%;
+    background-position: -100% 0%, 0% 0%, 100% 0%;
+    background-repeat: no-repeat;
+    animation: l9 2s infinite linear;
+}
+
+@keyframes l9 {
+    33% {
+        background-position: 0% 33%, 100% 33%, 200% 33%
+    }
+
+    66% {
+        background-position: -100% 66%, 0% 66%, 100% 66%
+    }
+
+    100% {
+        background-position: 0% 100%, 100% 100%, 200% 100%
+    }
+}
+
+@import url(https://fonts.googleapis.com/css2?family=Lato&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);
+
+
+
+/* Dark Theme Styles */
+body.dark {
+    background-color: #1e293b;
+    color: #f8fafc;
+}
+
+.container.dark {
+    background: linear-gradient(to bottom right, #334155, #1e293b);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.icon-button.dark {
+    background: #334155;
+    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+}
+
+.tooltip.dark {
+    background: #334155;
+}
+
+.tooltip-text.dark {
+    color: #e2e8f0;
+}
+
+.form-container.dark {
+    background: #334155;
+}
+
+.label.dark,
+.text-muted.dark,
+.text-small.dark,
+.footer.dark {
+    color: #e2e8f0;
+}
+
+
+.footer-links a.dark {
+    color: #60a5fa;
+}
+
+.input.dark,
+.select.dark {
+    background-color: #334155;
+    color: #e2e8f0;
+    border-color: #475569;
+}
+
+.input.dark:focus,
+.select.dark:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+}
+
+
+.news-container.dark {
+    background: #334155;
+    color: #e2e8f0;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+.news-title.dark {
+    color: #f8fafc;
+}
+
+.news-preview.dark {
+    background: #1e293b;
+    border: 1px dashed #475569;
+}
+
+.preview-text.dark {
+    color: #94a3b8;
+}

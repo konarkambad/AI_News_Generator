@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+ <html lang="en">
+     <head>
+         <meta charset="UTF-8" />
+         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <title>AI News App</title>
+         <link rel="stylesheet" href="index.css" />
+         </script>
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6C4NNFLRN"></script>
+ <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+ 
+   gtag('config', 'G-R6C4NNFLRN');
+ </script>
+ 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7375901080347470"
+      crossorigin="anonymous"></script>
+     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2964/2964063.png">
+ 	<link rel="stylesheet" href="index.css">
+     <link rel="stylesheet" href="tailwind.css">
+ 	<link rel="preconnect" href="https://fonts.googleapis.com">
+ 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+     </head>
+     <body>
+         <div id="webcrumbs">
+             <div class="container">
+                 <div class="header">
+                     <h1 class="title">AI News Generator</h1>
+                     <div class="button-group">
+                         <div class="group">
+                             <button class="icon-button">
+                                 <svg
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     class="icon"
+                                     viewBox="0 0 20 20"
+                                     fill="currentColor"
+                                 >
+                                     <path
+                                         fill-rule="evenodd"
+                                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                                         clip-rule="evenodd"
+                                     />
+                                 </svg>
+                             </button>
+                             <div class="tooltip">
+                                 <p class="tooltip-text">
+                                     Generate custom news articles on any topic
+                                     using advanced AI. Perfect for content
+                                     creation, research, or staying informed.
+                                 </p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+ 
+                 <div class="form-container">
+                     <div class="form-grid">
+                         <div>
+                             <label class="label" for="topic">Topic</label>
+                             <input
+                                 id="topic"
+                                 type="text"
+                                 placeholder="e.g., Technology, Climate Change, Sports"
+                                 class="input"
+                             />
+                         </div>
+ 						<div>
+                             <label class="label" for="audience">Target Audience</label>
+                             <input
+                                 id="audience"
+                                 type="text"
+                                 placeholder="e.g., General public, Industry professionals, Students"
+                                 class="input"
+                             />
+                         </div>
+                         <div>
+                             <label class="label" for="tone">Tone</label>
+                             <select id="tone" class="select">
+                                 <option value="Neutral">Neutral</option>
+                                 <option value="Formal">Formal</option>
+                                 <option value="Casual">Casual</option>
+                                 <option value="Optimistic">Optimistic</option>
+                                 <option value="Critical">Critical</option>
+                             </select>
+                         </div>
+                         <div>
+                             <label class="label" for="language">Language</label>
+                             <select id="language" class="select">
+                                 <option value="English">English</option>
+                                 <option value="Spanish">Spanish</option>
+                                 <option value="French">French</option>
+ 				<option value="Russian">Russian</option>
+                                 <option value="Chinese">Chinese</option>
+                                 <option value="Japanese">Japanese</option>
+                                 <option value="Arabic">Arabic</option>
+                             </select>
+                         </div>
+                         <div>
+                             <label class="label" for="length">Length</label>
+                             <select id="length" class="select">
+                                 <option value="150 to 300">
+                                     Short (150-300 words)
+                                 </option>
+                                 <option value="300 to 600">
+                                     Medium (300-600 words)
+                                 </option>
+                                 <option value="600 to 1000">
+                                     Long (600-1000 words)
+                                 </option>
+                             </select>
+                         </div>
+                     </div>
+ 
+                     <div class="button-container">
+                         <button class="generate-button">
+                             <span class="btn-text">Generate News</span>
+                             <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 class="icon"
+                                 viewBox="0 0 20 20"
+                                 fill="currentColor"
+                             >
+                                 <path
+                                     fill-rule="evenodd"
+                                     d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                     clip-rule="evenodd"
+                                 />
+                             </svg>
+                         </button>
+                     </div>
+                 </div>
+ 
+                 <div class="news-container">
+                     <div class="news-header">
+                         <h2 class="news-title">Your Generated News</h2>
+                         <div class="button-group">
+                             
+                             <button class="icon-button thumbsup-btn" style="opacity: 0;pointer-events: none;" title="Helpful">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
+                                     <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.92 7 8.4 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/>
+                                 </svg>
+                             </button>
+                             <button class="icon-button thumbsdown-btn" style="opacity: 0;pointer-events: none;" title="Not Helpful">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
+                                     <path d="M15 3H6C5.17 3 4.46 3.5 4.16 4.22l-3.02 7.05c-0.09 0.23-0.14 0.47-0.14 0.73v2c0 1.1 0.9 2 2 2h6.31l-0.95 4.57-0.03 0.32c0 0.41 0.17 0.79 0.44 1.06L9.83 23l6.59-6.59c0.36-0.36 0.58-0.86 0.58-1.41V5c0-1.1-0.9-2-2-2zm4 0v12h4V3h-4z"/>
+                                 </svg>
+                             </button>  
+                             <button class="icon-button light-btn" style="display: none;" title="Toggle Theme">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
+                                     <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
+                                 </svg>
+                             </button>
+                             <button class="icon-button dark-btn" title="Toggle Theme">
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor">
+                                     <path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/>
+                                 </svg>
+                             </button>                          
+                             <button class="icon-button download-btn" title="Download">
+                                 <svg
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     class="icon"
+                                     viewBox="0 0 24 24"
+                                     fill="currentColor"
+                                 >
+                                     <path
+                                         d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                                     />
+                                 </svg>
+                             </button>                            
+                             <button class="icon-button copy-btn" title="Copy">
+                                 <svg
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     class="icon"
+                                     viewBox="0 0 20 20"
+                                     fill="currentColor"
+                                 >
+                                     <path
+                                         d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z"
+                                     />
+                                     <path
+                                         d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"
+                                     />
+                                 </svg>
+                             </button>
+                         </div>
+                     </div>
+ 
+                     <div class="news-preview">
+                         <div class="preview-text">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="preview-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4z"/>
+                                <rect x="4" y="8" width="16" height="2" rx="0.5"/>
+                                <rect x="4" y="12" width="10" height="2" rx="0.5"/>
+                             </svg>
+                             <p class="text-muted">
+                                 Your AI-generated news will appear here
+                             </p>
+                             <p class="text-small">
+                                 Fill out the form above and click "Generate
+                                 News"
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+ 
+                 <div class="footer">
+                     <p>Powered by ITOM6219🤖 Group 3</p>
+                     <div class="footer-links">
+                         <a href="https://jasonzhang--121-group3.netlify.app">Jason</a>
+                         <a href="https://soyebahmed--121-group3.netlify.app">Soyeb</a>
+                         <a href="https://syedraed--121-group3.netlify.app">Syed</a>
+                         <a href="https://antonedouglasgray--121-group3.netlify.app">Antone</a>
+                         <a href="https://konarkambad--121-group3.netlify.app">Konark</a>
+                         <a href="https://sahibsood--121-group3.netlify.app">Sahib</a>
+                         <a href="https://Tanya--121-group3.netlify.app">Tanya</a>        
+                     </div>
+                 </div>
+             </div>
+         </div>
+ 		<script type="module" src="index.js"></script>
+     </body>
