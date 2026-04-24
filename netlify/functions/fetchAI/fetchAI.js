@@ -1,18 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { traceable } from "langsmith/traceable";
-
 
 const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY
 });
 
-
-const handler = traceable(async (event) => {
-
+const handler = async (event) => {
     try {
         const requestBody = JSON.parse(event.body);
         const { newsTopic, newsAudience, newsTone, newsLanugage, newsLength } = requestBody;
-
 
         const input = `I want to act as a journalist that writes news articles. Your task is to generate a news article about the topic of ${newsTopic}
         in a ${newsTone} tone. The article should be written in the ${newsLanugage} language. Make sure to limit the length of the news article with in the range of ${newsLength} words.
@@ -36,10 +31,8 @@ const handler = traceable(async (event) => {
         };
 
     } catch (error) {
-        return { statusCode: 500, body: error.toString() }
+        return { statusCode: 500, body: JSON.stringify({ error: error.toString() }) }
     }
-}, { name: "generateAdCopy",
-    project: process.env.LANGSMITH_PROJECT
- });
+};
 
 module.exports = { handler }
