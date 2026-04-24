@@ -202,7 +202,7 @@ async function fetchReply(
   newsLanugage,
   newsLength
 ) {
-  const url = "https://121-group3.netlify.app/.netlify/functions/fetchAI";
+  const url = "/.netlify/functions/fetchAI";
 
   try {
     const response = await fetch(url, {
@@ -219,7 +219,7 @@ async function fetchReply(
 
     const data = await response.json();
     console.info("API Response:", data); // Log API response
-    const cleanText = data.reply.choices[0].text.trim();
+    const cleanText = data.reply.content[0].text;
     return cleanText;
   } catch (error) {
     console.error("Fetch API Error:", error); // Log fetch errors
