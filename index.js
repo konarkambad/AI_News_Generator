@@ -41,17 +41,18 @@ document
         newsLanguage,
         newsLength
       );
-      newsPreview.innerHTML += response;
+      newsPreview.innerHTML = response;
       generateButton.disabled = false;
       buttonText.innerHTML = "Generate News";
       generateButton.style.background =
         "linear-gradient(to right, #2563eb, #4f46e5)";
       generateButton.style.opacity = 0.8;
-      document.querySelector("div.loader").remove();
-      // Add styles to the header of the news.
-      document.querySelector("div.news-preview h1").style.fontSize = "22px";
-      document.querySelector("div.news-preview h1").style.fontWeight = 600;
-      document.querySelector("div.news-preview h1").style.textAlign = "center";
+      const h1 = document.querySelector("div.news-preview h1");
+      if (h1) {
+        h1.style.fontSize = "22px";
+        h1.style.fontWeight = 600;
+        h1.style.textAlign = "center";
+      }
     } catch (error) {
       console.error("Error When Generating News", error);
       alert("An error occurred while we try to write the news for you.");
