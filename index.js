@@ -1,68 +1,130 @@
 let response = "";
+
+// ── Helpers ────────────────────────────────────────────────────────────
+
+function cleanHtml(html) {
+  return (html || "")
+    .replace(/^```(?:html)?\s*/i, "")
+    .replace(/\s*```\s*$/, "")
+    .trim();
+}
+
+function escapeHtml(s) {
+  return (s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function renderMetadata(meta) {
+  if (!meta) return "";
+
+  const sources = (meta.sources || [])
+    .map(
+      (s) =>
+        `<li><strong>${escapeHtml(s.name)}</strong> <span class="meta-country">(${escapeHtml(
+          s.country
+        )})</span> &middot; ${escapeHtml(s.politicalLean)} &middot; ${escapeHtml(s.tone)}</li>`
+    )
+    .join("");
+
+  return `
+    <div class="news-metadata">
+      <div class="meta-row">
+        <span class="meta-pair"><span class="meta-label">Bias:</span> ${escapeHtml(
+          String(meta.biasScore)
+        )}/10 (${escapeHtml(meta.biasLabel)})</span>
+        <span class="meta-pair"><span class="meta-label">Sources:</span> ${escapeHtml(
+          String(meta.sourceCount)
+        )}</span>
+        <span class="meta-pair"><span class="meta-label">Date range:</span> ${escapeHtml(
+          meta.dateRange
+        )}</span>
+        <span class="meta-pair"><span class="meta-label">Recency:</span> ${escapeHtml(
+          meta.recency
+        )}</span>
+      </div>
+      <details class="meta-sources">
+        <summary>Source breakdown</summary>
+        <ul>${sources}</ul>
+      </details>
+    </div>
+  `;
+}
+
+// ── Main: generate button ──────────────────────────────────────────────
+
 document
   .getElementsByClassName("generate-button")[0]
   .addEventListener("click", async () => {
-    const newsTopic = document.getElementById("topic").value;
+    const newsTopic    = document.getElementById("topic").value;
     const newsAudience = document.getElementById("audience").value;
-    const newsTone = document.getElementById("tone").value;
+    const newsTone     = document.getElementById("tone").value;
     const newsLanguage = document.getElementById("language").value;
-    const newsLength = document.getElementById("length").value;
-    const buttonText = document.getElementsByClassName("btn-text")[0];
-    const generateButton =
-      document.getElementsByClassName("generate-button")[0];
-    const newsPreview = document.getElementsByClassName("news-preview")[0];
-    const thumbsupBtn = document.getElementsByClassName("thumbsup-btn")[0];
-    const thumbsdownBtn = document.getElementsByClassName("thumbsdown-btn")[0];
-    newsPreview.innerHTML = '<div class="loader"></div>';
-    generateButton.disabled = true;
-    buttonText.innerHTML = "Please Wait";
+    const newsLength   = document.getElementById("length").value;
+
+    const buttonText     = document.getElementsByClassName("btn-text")[0];
+    const generateButton = document.getElementsByClassName("generate-button")[0];
+    const newsPreview    = document.getElementsByClassName("news-preview")[0];
+    const thumbsupBtn    = document.getElementsByClassName("thumbsup-btn")[0];
+    const thumbsdownBtn  = document.getElementsByClassName("thumbsdown-btn")[0];
+
+    newsPreview.innerHTML        = '<div class="loader"></div>';
+    generateButton.disabled      = true;
+    buttonText.innerHTML         = "Please Wait";
     generateButton.style.background =
       "linear-gradient(to right, rgb(255, 81, 47) 0%, rgb(221, 36, 118) 51%, rgb(255, 81, 47) 100%)";
     generateButton.style.opacity = 1;
-    generateButton.addEventListener("click", () => {
+
+    if (typeof gtag === "function") {
       gtag("event", "submit", { newsTopic: newsTopic });
-      fetchReply();
-    });
-    thumbsupBtn.style.opacity = 1;
-    thumbsdownBtn.style.opacity = 1;
-    thumbsupBtn.style.pointerEvents = "auto";
+    }
+
+    thumbsupBtn.style.opacity        = 1;
+    thumbsdownBtn.style.opacity      = 1;
+    thumbsupBtn.style.pointerEvents  = "auto";
     thumbsdownBtn.style.pointerEvents = "auto";
-    document
-      .querySelector(".thumbsup-btn > svg")
-      .setAttribute("fill", "currentColor");
-    document
-      .querySelector(".thumbsdown-btn > svg")
-      .setAttribute("fill", "currentColor");
+    document.querySelector(".thumbsup-btn > svg").setAttribute("fill", "currentColor");
+    document.querySelector(".thumbsdown-btn > svg").setAttribute("fill", "currentColor");
+
     try {
-      response = await fetchReply(
+      const result = await fetchReply(
         newsTopic,
         newsAudience,
         newsTone,
         newsLanguage,
         newsLength
       );
-      newsPreview.innerHTML = response;
+
+      response = cleanHtml(result.article);
+      newsPreview.innerHTML = renderMetadata(result.meta) + response;
+
       generateButton.disabled = false;
-      buttonText.innerHTML = "Generate News";
-      generateButton.style.background =
-        "linear-gradient(to right, #2563eb, #4f46e5)";
-      generateButton.style.opacity = 0.8;
+      buttonText.innerHTML    = "Generate News";
+      generateButton.style.background = "linear-gradient(to right, #2563eb, #4f46e5)";
+      generateButton.style.opacity    = 0.8;
+
       const h1 = document.querySelector("div.news-preview h1");
       if (h1) {
-        h1.style.fontSize = "22px";
+        h1.style.fontSize  = "22px";
         h1.style.fontWeight = 600;
         h1.style.textAlign = "center";
       }
     } catch (error) {
       console.error("Error When Generating News", error);
-      alert("An error occurred while we try to write the news for you.");
+      newsPreview.innerHTML = `<p class="text-muted" style="padding:16px;">${escapeHtml(
+        error.message || "Something went wrong while generating the news. Please try again."
+      )}</p>`;
       generateButton.disabled = false;
-      buttonText.innerHTML = "Generate News";
-      generateButton.style.background =
-        "linear-gradient(to right, #2563eb, #4f46e5)";
-      generateButton.style.opacity = 0.8;
+      buttonText.innerHTML    = "Generate News";
+      generateButton.style.background = "linear-gradient(to right, #2563eb, #4f46e5)";
+      generateButton.style.opacity    = 0.8;
     }
   });
+
+// ── Download ───────────────────────────────────────────────────────────
 
 document
   .getElementsByClassName("download-btn")[0]
@@ -87,11 +149,8 @@ document
                         ${response}
                       </body>
                     </html>`;
-    // Create a Blob object with the content of the response variable
     const blob = new Blob([output], { type: "text/html" });
-    // Create a URL for the Blob object
     const url = URL.createObjectURL(blob);
-    // Create an anchor element dynamically
     const link = document.createElement("a");
     link.href = url;
     link.download = "news.html";
@@ -99,8 +158,12 @@ document
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    gtag("event", "feedback", { download: 1 });
+    if (typeof gtag === "function") {
+      gtag("event", "feedback", { download: 1 });
+    }
   });
+
+// ── Copy ───────────────────────────────────────────────────────────────
 
 document.getElementsByClassName("copy-btn")[0].addEventListener("click", () => {
   if (response.length == 0) {
@@ -108,124 +171,111 @@ document.getElementsByClassName("copy-btn")[0].addEventListener("click", () => {
   }
   navigator.clipboard.writeText(response);
   alert("News successfully copied!");
-  gtag("event", "feedback", { copy: 1 });
+  if (typeof gtag === "function") {
+    gtag("event", "feedback", { copy: 1 });
+  }
 });
+
+// ── Feedback ───────────────────────────────────────────────────────────
 
 document
   .getElementsByClassName("thumbsup-btn")[0]
   .addEventListener("click", () => {
-    document.getElementsByClassName("thumbsup-btn")[0].style.pointerEvents =
-      "none";
-    document.getElementsByClassName("thumbsdown-btn")[0].style.pointerEvents =
-      "none";
-    document
-      .querySelector(".thumbsup-btn > svg")
-      .setAttribute("fill", "#4eae31");
-    gtag("event", "feedback", { satisfied: 1 });
+    document.getElementsByClassName("thumbsup-btn")[0].style.pointerEvents = "none";
+    document.getElementsByClassName("thumbsdown-btn")[0].style.pointerEvents = "none";
+    document.querySelector(".thumbsup-btn > svg").setAttribute("fill", "#4eae31");
+    if (typeof gtag === "function") {
+      gtag("event", "feedback", { satisfied: 1 });
+    }
   });
 
 document
   .getElementsByClassName("thumbsdown-btn")[0]
   .addEventListener("click", () => {
-    document.getElementsByClassName("thumbsup-btn")[0].style.pointerEvents =
-      "none";
-    document.getElementsByClassName("thumbsdown-btn")[0].style.pointerEvents =
-      "none";
-    document
-      .querySelector(".thumbsdown-btn > svg")
-      .setAttribute("fill", "#e62a39");
-    gtag("event", "feedback", { satisfied: 0 });
+    document.getElementsByClassName("thumbsup-btn")[0].style.pointerEvents = "none";
+    document.getElementsByClassName("thumbsdown-btn")[0].style.pointerEvents = "none";
+    document.querySelector(".thumbsdown-btn > svg").setAttribute("fill", "#e62a39");
+    if (typeof gtag === "function") {
+      gtag("event", "feedback", { satisfied: 0 });
+    }
   });
-document.getElementsByClassName("light-btn")[0].addEventListener("click",()=>{
-  // Toggle the 'dark' class on the body element
-  document.body.classList.toggle('dark');
-  // Toggle all relevant elements for dark mode
+
+// ── Dark / light mode toggle ───────────────────────────────────────────
+
+document.getElementsByClassName("light-btn")[0].addEventListener("click", () => {
+  document.body.classList.toggle("dark");
   const elementsToToggle = [
-    '.container',
-    '.icon-button',
-    '.tooltip',
-    '.tooltip-text',
-    '.form-container',
-    '.news-container',
-    '.label',
-    '.news-title',
-    '.text-muted',
-    '.text-small',
-    '.footer',
-    '.footer-links a',
-    '.input',
-    '.select',
-    '.news-preview',
-    '.preview-text'
+    ".container",
+    ".icon-button",
+    ".tooltip",
+    ".tooltip-text",
+    ".form-container",
+    ".news-container",
+    ".label",
+    ".news-title",
+    ".text-muted",
+    ".text-small",
+    ".footer",
+    ".footer-links a",
+    ".input",
+    ".select",
+    ".news-preview",
+    ".preview-text"
   ];
-  elementsToToggle.forEach(selector => {
-    document.querySelectorAll(selector).forEach(element => {
-      element.classList.toggle('dark');
+  elementsToToggle.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((element) => {
+      element.classList.toggle("dark");
     });
   });
-  document.getElementsByClassName("dark-btn")[0].style.display = "block";
+  document.getElementsByClassName("dark-btn")[0].style.display  = "block";
   document.getElementsByClassName("light-btn")[0].style.display = "none";
-})
-document.getElementsByClassName("dark-btn")[0].addEventListener("click",()=>{
-  // Toggle the 'dark' class on the body element
-  document.body.classList.toggle('dark');
-  // Toggle all relevant elements for dark mode
+});
+
+document.getElementsByClassName("dark-btn")[0].addEventListener("click", () => {
+  document.body.classList.toggle("dark");
   const elementsToToggle = [
-    '.container',
-    '.icon-button',
-    '.tooltip',
-    '.tooltip-text',
-    '.form-container',
-    '.news-container',
-    '.label',
-    '.news-title',
-    '.text-muted',
-    '.text-small',
-    '.footer',
-    '.footer-links a',
-    '.input',
-    '.select',
-    '.news-preview',
-    '.preview-text'
+    ".container",
+    ".icon-button",
+    ".tooltip",
+    ".tooltip-text",
+    ".form-container",
+    ".news-container",
+    ".label",
+    ".news-title",
+    ".text-muted",
+    ".text-small",
+    ".footer",
+    ".footer-links a",
+    ".input",
+    ".select",
+    ".news-preview",
+    ".preview-text"
   ];
-  elementsToToggle.forEach(selector => {
-    document.querySelectorAll(selector).forEach(element => {
-      element.classList.toggle('dark');
+  elementsToToggle.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((element) => {
+      element.classList.toggle("dark");
     });
   });
   document.getElementsByClassName("light-btn")[0].style.display = "block";
-  document.getElementsByClassName("dark-btn")[0].style.display = "none";
-})
-async function fetchReply(
-  newsTopic,
-  newsAudience,
-  newsTone,
-  newsLanugage,
-  newsLength
-) {
+  document.getElementsByClassName("dark-btn")[0].style.display  = "none";
+});
+
+// ── API call ───────────────────────────────────────────────────────────
+
+async function fetchReply(newsTopic, newsAudience, newsTone, newsLanugage, newsLength) {
   const url = "/.netlify/functions/fetchAI";
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        newsTopic,
-        newsAudience,
-        newsTone,
-        newsLanugage,
-        newsLength,
-      }),
-    });
+  const res = await fetch(url, {
+    method:  "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ newsTopic, newsAudience, newsTone, newsLanugage, newsLength })
+  });
 
-    const data = await response.json();
-    console.info("API Response:", data); // Log API response
-    const cleanText = data.reply.content[0].text;
-    return cleanText;
-  } catch (error) {
-    console.error("Fetch API Error:", error); // Log fetch errors
-    alert(
-      "An error occurred while fetching the response. Check the console for details."
-    );
-  }
+  const payload = await res.json();
+  console.info("API Response:", payload);
+
+  if (payload.error) throw new Error(payload.error);
+  if (!payload.data) throw new Error("Unexpected response from server.");
+
+  return payload.data; // { meta, article }
 }
