@@ -1,6 +1,6 @@
 # AI News Generator
 
-**Live demo:** _add your Netlify URL here_
+**Live demo:** https://ai-news-generator.netlify.app
 
 A small web app that generates short news articles using Claude. You pick a topic, an audience, a tone, a language and a length, and the app produces a draft you can read, copy, or download as an HTML file.
 
